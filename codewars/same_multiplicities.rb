@@ -22,7 +22,7 @@ require 'test/unit/assertions'
 include Test::Unit::Assertions
 
 def comp(array1, array2)
-  return nil if array1.size != array2.size
+  return nil if array1.nil? || array2.nil? || array1.size != array2.size
 
   array1.sort!
   array2.sort!
