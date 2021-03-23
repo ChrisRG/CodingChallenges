@@ -33,6 +33,9 @@ def comp(array1, array2)
   true
 end
 
+# Clever one-liner:
+#  array1.nil? || array2.nil? ? false : array1.sort.map {|v| v ** 2} == array2.sort
+
 puts 'Running tests...'
 assert_equal(
   comp( [121, 144, 19, 161, 19, 144, 19, 11], 
