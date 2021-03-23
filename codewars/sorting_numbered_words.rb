@@ -15,10 +15,21 @@ require 'test/unit/assertions'
 include Test::Unit::Assertions
 
 def order(words)
+  return '' if words.empty?
+
+  word_array = words.split
+  ordered_string = []
+  until ordered_string.size == word_array.size
+    word_array.each do |word|
+      number = word[/[1-9]/].to_i
+      ordered_string << word if number == ordered_string.size + 1
+    end
+  end
+  ordered_string.join(' ')
 end
 
 puts 'Running tests...'
-assert_equals(order('is2 Thi1s T4est 3a'), 'Thi1s is2 3a T4est')
-assert_equals(order('4of Fo1r pe6ople g3ood th5e the2'), 'Fo1r the2 g3ood 4of th5e pe6ople')
-assert_equals(order(''), '', 'Empty input should return empty string')
+assert_equal(order('is2 Thi1s T4est 3a'), 'Thi1s is2 3a T4est')
+assert_equal(order('4of Fo1r pe6ople g3ood th5e the2'), 'Fo1r the2 g3ood 4of th5e pe6ople')
+assert_equal(order(''), '', 'Empty input should return empty string')
 puts 'All tests passed.'
