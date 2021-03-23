@@ -1,3 +1,5 @@
+# Are they the same? (6 kyu)
+# https://www.codewars.com/kata/550498447451fbbd7600041c/train/ruby
 # Given two arrays a and b write a function comp(a, b) (orcompSame(a, b)) that checks whether the two arrays have the "same" elements, with the same multiplicities. "Same" means, here, that the elements in b are the elements in a squared, regardless of the order.
 # Examples
 # Valid arrays
@@ -19,23 +21,22 @@
 require 'test/unit/assertions'
 include Test::Unit::Assertions
 
-def solution(roman)
-  symbols = [['M', 1000], ['CM', 900], ['D', 500], ['CD', 400], ['C', 100], ['XC', 90], ['L', 50], ['XL', 40], ['X', 10], ['IX', 9], ['V', 5], ['IV', 4], ['I', 1]]
-  arabic_num = 0
-  chars = roman.upcase
-  symbols.each do |symbol, value|
-    while chars.start_with?(symbol)
-      arabic_num += value
-      chars = chars[symbol.length...chars.length]
-    end
+def comp(array1, array2)
+  return nil if array1.size != array2.size
+
+  array1.sort!
+  array2.sort!
+
+  array1.each_with_index do |num, index|
+    return false if array2[index] != num**2
   end
-  arabic_num
+  true
 end
 
 puts 'Running tests...'
-assert_equal solution('XXI'), 21
-assert_equal solution('I'), 1
-assert_equal solution('IV'), 4
-assert_equal solution('MMVIII'), 2008
-assert_equal solution('MDCLXVI'), 1666
+assert_equal(
+  comp( [121, 144, 19, 161, 19, 144, 19, 11], 
+        [11*11, 121*121, 144*144, 19*19, 161*161, 19*19, 144*144, 19*19]),
+  true
+)
 puts 'All tests passed.'
