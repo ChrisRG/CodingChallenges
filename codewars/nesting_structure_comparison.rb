@@ -11,7 +11,7 @@
 
 # # should return true
 # [ [ [ ], [ ] ] ].same_structure_as( [ [ [ ], [ ] ] ] ); 
-
+rr
 # # should return false
 # [ [ [ ], [ ] ] ].same_structure_as( [ [ 1, 1 ] ] )  
 
@@ -20,12 +20,27 @@ class Array
       
   end
 
-  # Output is an array of integers, e.g. [0, 1]
-  # Function:
-  #   Count = 0
-  #   Loop through array elements
-  #     If an integer, update count
-  #     If an array, rerun function
-  #   Push count into structure_arr
-  #
+  def analyze_struct(arr, structure = [])
+    count = 0
+    arr.each do |element|
+      unless element.is_a?
+        count += 1
+      else
+        analyze_struct(element, structure)
+      end
+    end
+    structure << count
+    return structure
+  end
 end
+
+# [1, 1, 1]
+# structure = [3]
+#
+# [1, [1, 1]]
+# count = 1
+# [1, 1]
+# count = 2
+# return [2]
+# structre [2]
+# structure << [
