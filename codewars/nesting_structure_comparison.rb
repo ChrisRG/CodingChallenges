@@ -16,6 +16,8 @@
 
 class Array
   def same_structure_as(other_arr) # returns true or false
+    return false unless other_arr.is_a?(Array)
+
     return true if analyze_struct == other_arr.analyze_struct
   end
 
@@ -35,21 +37,9 @@ class Array
   end
 end
 
-# [1, 1, 1]
-# structure = [3]
-#
-# [1, [1, 1]]
-# count = 1
-# [1, 1]
-# count = 2
-# return [2]
-# structre [2]
-# structure << [2, [3]
-arr0 = Array.new([1, 1, 1])
-arr1 = Array.new([1, [1, 1]])
-arr2 = Array.new([[2, 2], 1])
-p arr0.analyze_struct
-puts "---"
-p arr1.analyze_struct
-puts "---"
-p arr2.analyze_struct
+# Clever version:
+  # def same_structure_as(a)
+  #   return false if self.class!=a.class || size!=a.size 
+  #   a.each_index { |i| return false if self[i].class==Array && !self[i].same_structure_as(a[i]) }
+  #   true
+  # end
