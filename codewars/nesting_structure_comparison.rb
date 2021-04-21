@@ -11,22 +11,23 @@
 
 # # should return true
 # [ [ [ ], [ ] ] ].same_structure_as( [ [ [ ], [ ] ] ] ); 
-rr
 # # should return false
 # [ [ [ ], [ ] ] ].same_structure_as( [ [ 1, 1 ] ] )  
 
 class Array
   def same_structure_as(other_arr) # returns true or false
-      
+    return true if analyze_struct == other_arr.analyze_struct
   end
 
-  def analyze_struct(arr, structure = [])
+  def analyze_struct(structure = [])
     count = 0
-    arr.each do |element|
-      unless element.is_a?
+    self.each do |element|
+      unless element.is_a?(Array)
         count += 1
       else
-        analyze_struct(element, structure)
+        structure << count
+        count = 0
+        element.analyze_struct(structure)
       end
     end
     structure << count
@@ -43,4 +44,12 @@ end
 # count = 2
 # return [2]
 # structre [2]
-# structure << [
+# structure << [2, [3]
+arr0 = Array.new([1, 1, 1])
+arr1 = Array.new([1, [1, 1]])
+arr2 = Array.new([[2, 2], 1])
+p arr0.analyze_struct
+puts "---"
+p arr1.analyze_struct
+puts "---"
+p arr2.analyze_struct
