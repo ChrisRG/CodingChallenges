@@ -23,6 +23,11 @@ def scramble(s1, s2)
   pop_s2.empty?
 end
 
+# Cool one-liners
+# s2.chars.all? { |c| s1.sub!(c, '') }
+#
+# s2.chars.uniq.all?{|x| s2.count(x)<=s1.count(x)}
+
 p scramble('rkqodlw','world') # true
 p scramble('cedewaraaossoqqyt','codewars') # true
 p scramble('katas','steak') #false
