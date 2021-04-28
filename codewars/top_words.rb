@@ -45,12 +45,12 @@ end
 
 # Clever functional approach
 #def top_3_words(text)
-# text.scan(/[A-Za-z']+/)
-#     .select { |x| /[A-Za-z]+/ =~ x }
-#     .group_by { |x| x.downcase }
-#     .sort_by { |k,v| -v.count }
-#     .first(3)
-#     .map(&:first)
+# text.scan(/[A-Za-z']+/)  -- Iterate through split string, create array of words matching regexp
+#     .select { |x| /[A-Za-z]+/ =~ x } -- Filter items that have at least one letter
+#     .group_by { |x| x.downcase } -- Enumerable group_by => returns hash where keys are evaluated result, values are array of elements that correspond to key, i.e. {"e" => ["e", "E", "e"], "a" => ["a", "A"]}
+#     .sort_by { |k,v| -v.count } -- Sort the hash by counting the number of elements in the value array, negative value puts it in descending order
+#     .first(3) -- Take the first three items (two-dimensional arrays)
+#     .map(&:first) -- Map each array element and convert into just the first item (i.e. the hash key)
 # end
 
 class Test
