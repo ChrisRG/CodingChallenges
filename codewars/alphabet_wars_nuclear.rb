@@ -26,14 +26,42 @@
 # ##a[a]b[c]#  => "c"
 
 def alphabetWar(battlefield)
-  survivors = battlefield
-  return survivors.gsub(/[^\w]/, '')
+  return battlefield.gsub(/[^\w]/, '') unless battlefield.include?('#')
+  bombs_shelters = battlefield.scan(/(#+|\[[a-z]+\]+)/).flatten # Look for either 1 or more #s or bracketed strings
+  temp_survivors = []
+  survivors = []
+  bombs_shelters.each do |element|
+    if temp_survivors.empty?
+      temp_survivors << element
+    elsif element.include?('#') && temp_survivors.last.include?('#')
+      temp_survivors << element
+    elsif element.include?('#') && !temp_survivors.last.include?('#')
+      temp_survivors << element
+      survivors << check_situation(temp_survivors)
+      temp_survivors = [element]
+    elsif !element.include?('#') && !temp_survivors.last.include?('#')
+      survivors << check_situation(temp_survivors)
+      temp_survivors = [element]
+    else
+      temp_survivors << element
+    end
+  end
+  survivors << check_situation(temp_survivors)
+
+  survivors.join.gsub(/[^\w]/, '')
 end
+
+def check_situation(temp_survivors)
+  if temp_survivors.join.count('#') >= 2
+    return ''
+  else
+    return temp_survivors.join.gsub(/[^\w]/, '')
+  end
+end
+
 
 class Test
   def self.assert_equals(left, right)
-    p left
-    p right
     puts left == right ? "PASSED" : "FAILED"
   end
 end
