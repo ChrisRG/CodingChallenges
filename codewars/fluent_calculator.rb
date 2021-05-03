@@ -12,8 +12,6 @@
 # Each calculation consists of one operation only.
 
 class Calc
-  attr_accessor :left, :right, :operation
- 
   def initialize
     @left = nil
     @right = nil
@@ -115,3 +113,34 @@ end
 
 Test.assert_equals(Calc.new.four.plus.five, 9)
 Test.assert_equals(Calc.new.five.plus.four, 9)
+
+
+# Clever way
+
+# class Fixnum
+#   def plus;       Calc.new("+", self) end
+#   def minus;      Calc.new("-", self) end
+#   def times;      Calc.new("*", self) end
+#   def divided_by; Calc.new("/", self) end
+# end
+
+# class Calc
+#   def initialize(*arguments)
+#     if arguments.length == 2
+#       @operation = arguments[0]
+#       @number    = arguments[1]
+#     end
+#   end
+  
+#   %w(zero one two three four five six seven eight nine).each_with_index do |w,i|
+#     define_method(w) { perform i }
+#   end
+  
+#   def perform number
+#     if @operation
+#       @number.send(@operation, number)
+#     else
+#       number
+#     end
+#   end
+# end
