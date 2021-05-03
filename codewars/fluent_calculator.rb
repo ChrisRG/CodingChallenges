@@ -11,136 +11,107 @@
 
 # Each calculation consists of one operation only.
 
-def Calc
-  attr_accessor :left, :right
-
+class Calc
+  attr_accessor :left, :right, :operation
+ 
   def initialize
     @left = nil
-    @right = nil 
+    @right = nil
     @operation = nil
   end
-  
+
   def plus
-    @operation = '+'
-    self
+    if @operation.nil?
+      @operation = 'plus'
+      return self
+    else
+      return @left + @right
+    end
   end
 
   def minus
-    @operation = '-'
-    self
+    if @operation.nil?
+      @operation = 'minus'
+      return self
+    else
+      return @left - @right
+    end
   end
 
   def times
-    @operation = '*'
-    self
+    if @operation.nil?
+      @operation = 'times'
+      return self
+    else
+      return @left * @right
+    end
   end
 
   def divided_by
-    @operation = '/'
-    self
+    if @operation.nil?
+      @operation = 'divided_by'
+      return self
+    else
+      return @left / @right
+    end
   end
 
   def zero
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(0)
   end
   
   def one
-    if @left.nil?
-      @left = 1
-      return self
-    else
-      @right = 1
-      calculate
-    end
+    calculate(1)
   end
 
   def two
-    if @left.nil?
-      @left = 2
-      return self
-    else
-      @right = 2
-      calculate
-    end
+    calculate(2)
   end
 
   def three
-    if @left.nil?
-      @left = 3
-      return self
-    else
-      @right = 3
-      calculate
-    end
+    calculate(3)
   end
 
   def four
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(4)
   end
 
   def five
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(5)
   end
 
   def six
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(6)
   end
 
   def seven
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(7)
   end
 
   def eight
-    if @left.nil?
-      @left = 0
-      return self
-    else
-      @right = 0
-      calculate
-    end
+    calculate(8)
   end
 
   def nine
-    if @left.nil?
-      @left = 0
+    calculate(9)
+  end
+
+  def calculate(number)
+    if @operation.nil?
+      @left = number
       return self
     else
-      @right = 0
-      calculate
+      @right = number
+      self.send(@operation)
     end
   end
-
-  def calculate
-  end
-
 end
+
+class Test
+  def self.assert_equals(left, right)
+    puts left == right ? "PASSED" : "FAILED"
+  end
+end
+
+Test.assert_equals(Calc.new.four.plus.five, 9)
+Test.assert_equals(Calc.new.five.plus.four, 9)
