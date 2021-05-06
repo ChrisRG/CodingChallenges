@@ -49,15 +49,16 @@ class Test
 end
   
 numbers = [5, 32, 5, 1, 31, 70, 30, 8]
-# index = 0
-# while index < array.size
-# pointer = index + 1
-# while array[pointer] <= array[index] + difference
-# add array[pointer]
-# pointer += 1
-# index = pointer
 Test.assert_equals(GroupByDifference.new(numbers).find(100), [1,5,5,8,30,31,32,70])
 Test.assert_equals(GroupByDifference.new(numbers).find(3), [5,5,8,30,31,32])
 Test.assert_equals(GroupByDifference.new(numbers).find(2), [5,5,30,31,32])
 Test.assert_equals(GroupByDifference.new(numbers).find(0), [5,5])
 Test.assert_equals(GroupByDifference.new([]).find(10), [])
+
+# Clever functional solution
+  # def find(difference)
+  #   @numbers.sort
+  #           .chunk_while { |a, b| b - a <= difference }
+  #           .select { |arr| arr.length > 1 }
+  #           .flatten
+  # end
