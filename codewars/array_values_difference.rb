@@ -19,14 +19,43 @@
 
 class GroupByDifference
   def initialize(numbers)
+    @ary = numbers.sort
   end
 
   def find(difference)
+    return [] if @ary.empty?
+    
+    index = 0
+    diff_ary = []
+    while index < @ary.size 
+      cluster = [@ary[index]]
+      pointer = index + 1
+      while pointer < @ary.size && @ary[pointer] <= (@ary[index] + difference)
+        cluster << @ary[pointer]
+        pointer += 1
+      end
+      index = pointer
+      diff_ary << cluster if cluster.size > 1
+    end
+    return diff_ary.flatten
   end
 end
 
-numbers = [5, 32, 5, 1, 31, 70, 30, 8]
+
+class Test
+  def self.assert_equals(left, right)
+    puts left == right ? "PASSED" : "FAILED"
+  end
+end
   
+numbers = [5, 32, 5, 1, 31, 70, 30, 8]
+# index = 0
+# while index < array.size
+# pointer = index + 1
+# while array[pointer] <= array[index] + difference
+# add array[pointer]
+# pointer += 1
+# index = pointer
 Test.assert_equals(GroupByDifference.new(numbers).find(100), [1,5,5,8,30,31,32,70])
 Test.assert_equals(GroupByDifference.new(numbers).find(3), [5,5,8,30,31,32])
 Test.assert_equals(GroupByDifference.new(numbers).find(2), [5,5,30,31,32])
