@@ -82,3 +82,6 @@ Test.assert_equals(dirReduc(u), ["NORTH", "WEST", "SOUTH", "EAST"])
 #   OPPOSITE[dir] == stack.last ? stack.pop : stack.push(dir)
 # end
 # stack
+#
+# Second clever solution
+#    d = d.join ; while d.gsub!(/NORTHSOUTH|SOUTHNORTH|WESTEAST|EASTWEST/, '') ; end ; d.scan(/NORTH|SOUTH|WEST|EAST/)
