@@ -43,37 +43,25 @@
 #     if you want to translate, please ask before translating.
 
 def dirReduc(arr)
-  # [directions]
-  # while changed == false
-  # iterate by pairs
-  #
-  # reject opposite pairs, changed = true => updating our array
-  # return new array
-  # ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]
+  opposite = { "NORTH" => "SOUTH", 
+                "SOUTH" => "NORTH", 
+                "EAST" => "WEST", 
+                "WEST" => "EAST" }
 
-  new_arr = arr.dup
   modified = true
 
   while modified
     modified = false
-    new_arr.each_with_index do |elem, index|
-      if new_arr[index + 1] == opposite(elem)
-        new_arr.slice!(index..index + 1)
+    arr.each_with_index do |elem, index|
+      if arr[index + 1] == opposite[elem]
+        arr.slice!(index..index + 1)
         modified = true
         break
       end
     end
   end
 
-  return new_arr
-end
-
-def opposite(dir)
-  opposites = { "NORTH" => "SOUTH", 
-                "SOUTH" => "NORTH", 
-                "EAST" => "WEST", 
-                "WEST" => "EAST" }
-  return opposites[dir]
+  arr
 end
 
 class Test
