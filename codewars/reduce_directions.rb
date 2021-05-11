@@ -43,11 +43,7 @@
 #     if you want to translate, please ask before translating.
 
 def dirReduc(arr)
-  opposite = { "NORTH" => "SOUTH", 
-                "SOUTH" => "NORTH", 
-                "EAST" => "WEST", 
-                "WEST" => "EAST" }
-
+  opposite = { "NORTH" => "SOUTH", "SOUTH" => "NORTH", "EAST" => "WEST", "WEST" => "EAST" }
   modified = true
 
   while modified
@@ -79,3 +75,10 @@ a = ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]
 Test.assert_equals(dirReduc(a), ["WEST"])
 u=["NORTH", "WEST", "SOUTH", "EAST"]
 Test.assert_equals(dirReduc(u), ["NORTH", "WEST", "SOUTH", "EAST"])
+
+# Clever solution
+#  stack = []
+# arr.each do |dir|
+#   OPPOSITE[dir] == stack.last ? stack.pop : stack.push(dir)
+# end
+# stack
