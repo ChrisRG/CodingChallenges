@@ -9,7 +9,7 @@ function solution(str, ending) {
   if (ending === '') {
     return true
   }
-  return str.slice(0 - ending.length, str.length) === ending
+  return ending === '' || str.slice(0 - ending.length, str.length) === ending
 }
 
 class Test {
