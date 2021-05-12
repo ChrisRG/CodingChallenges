@@ -41,3 +41,13 @@ class Test {
 maxSequence([-2, 1, -3, 4, -1, 2, 1, -5, 4]);
 // Test.assertEquals(maxSequence([]), 0);
 // Test.assertEquals(maxSequence([-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6);
+//
+
+// Solution:
+  // var min = 0, ans = 0, i, sum = 0;
+  // for (i = 0; i < arr.length; ++i) {
+  //   sum += arr[i];
+  //   min = Math.min(sum, min);
+  //   ans = Math.max(ans, sum - min);
+  // }
+  // return ans;
