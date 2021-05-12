@@ -25,3 +25,6 @@ class Test {
 
 Test.assertEquals(solution('abcde', 'cde'), true)
 Test.assertEquals(solution('abcde', 'abc'), false)
+
+// JavaScript solution:
+// return str.endsWith(ending);
