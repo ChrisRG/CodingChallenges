@@ -31,3 +31,11 @@
 # decode(code(t)) == "I.was.going.fishing.that.morning.at.ten.o'clock"
 
 # (Dots indicate spaces since they are quite invisible).
+#
+def code(s)
+    # your code
+end
+
+def decode(s)
+    # your code
+end
