@@ -10,3 +10,9 @@ Usage (with dependencies):
 
 Additional options:
 [rust-script](https://rust-script.org/)
+
+For example, to run the example script in this directory:
+```
+cargo install cargo-script
+cargo script example-script.rs
+```
