@@ -53,6 +53,25 @@ impl Solution {
     }
 }
 
+fn main() {
+    let dumb_tree = Some(Rc::new(RefCell::new(TreeNode { 
+        val: 3,
+        left: Some(Rc::new(RefCell::new(TreeNode::new(9),
+        ))),
+        right: Some(Rc::new(RefCell::new(TreeNode { 
+            val: 20, 
+            left: Some(Rc::new(RefCell::new(TreeNode::new(15)))),
+            right: Some(Rc::new(RefCell::new(TreeNode::new(7)))),
+        } )))
+        }
+        )));
+    
+    let sol = Solution::max_depth(dumb_tree);
+    println!("{:?}", sol);
+}
+
+
+// Ninevra's tree macro
 macro_rules! tree {
         ($value:expr,,) => {
             TreeNode {
@@ -84,19 +103,3 @@ macro_rules! tree {
         };
     }
 
-fn main() {
-    let dumb_tree = Some(Rc::new(RefCell::new(TreeNode { 
-        val: 3,
-        left: Some(Rc::new(RefCell::new(TreeNode::new(9),
-        ))),
-        right: Some(Rc::new(RefCell::new(TreeNode { 
-            val: 20, 
-            left: Some(Rc::new(RefCell::new(TreeNode::new(15)))),
-            right: Some(Rc::new(RefCell::new(TreeNode::new(7)))),
-        } )))
-        }
-        )));
-    
-    let sol = Solution::max_depth(dumb_tree);
-    println!("{:?}", sol);
-}
