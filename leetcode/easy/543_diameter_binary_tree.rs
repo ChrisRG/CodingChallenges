@@ -37,23 +37,26 @@ struct Solution;
 
 impl Solution {
     pub fn diameter_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        if root.is_none() { return 0; }
+        let mut max: i32 = 1;
 
-        Solution::height(root, -1)
+        Solution::height(root, &mut max);
+
+        return max - 1;
     }
 
-    fn height(node: Option<Rc<RefCell<TreeNode>>>, max: i32) -> i32 {
+    fn height(node: Option<Rc<RefCell<TreeNode>>>, max: &mut i32) -> i32 {
         match node {
             Some(curr_node_rc) => {
                 let curr_node = curr_node_rc.borrow();
 
                 let left_height = Solution::height(curr_node.left.clone(), max);
-                let right_height = Solution::height(curr_node.left.clone(), max);
+                let right_height = Solution::height(curr_node.right.clone(), max);
 
-                let max_height = std::cmp::max(max, left_height + right_height + 1);
-                if max_height < 0 { return 1 } else { return max_height + 1 } 
+                let curr_diameter = left_height + right_height;
+                *max = std::cmp::max(*max, curr_diameter + 1);
+                return 1 + std::cmp::max(left_height, right_height) 
             }
-            None => return -1
+            None => 0
         }
     }
 }
