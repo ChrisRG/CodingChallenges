@@ -46,9 +46,11 @@ impl Solution {
         match node {
             Some(curr_node_rc) => {
                 let curr_node = curr_node_rc.borrow();
-                let max_height = std::cmp::max(
-                    Solution::height(curr_node.left.clone(), max),
-                    Solution::height(curr_node.right.clone(), max));
+
+                let left_height = Solution::height(curr_node.left.clone(), max);
+                let right_height = Solution::height(curr_node.left.clone(), max);
+
+                let max_height = std::cmp::max(max, left_height + right_height + 1);
                 if max_height < 0 { return 1 } else { return max_height + 1 } 
             }
             None => return -1
