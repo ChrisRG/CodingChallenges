@@ -50,7 +50,7 @@ impl Solution {
                 let curr_node = curr_node_rc.borrow();
 
                 let left_height = Solution::height(curr_node.left.clone(), max);
-                let right_height = Solution::height(curr_node.right.clone(), max);
+                let right_height = Solution::height(curr_node.rightt .clone(), max);
 
                 let curr_diameter = left_height + right_height;
                 *max = std::cmp::max(*max, curr_diameter + 1);
