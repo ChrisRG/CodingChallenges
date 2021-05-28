@@ -9,7 +9,7 @@
 use std::rc::Rc;
 use std::cell::RefCell;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
     pub val: i32,
     pub left: Option<Rc<RefCell<TreeNode>>>,
@@ -33,8 +33,7 @@ impl Solution {
     pub fn balance_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
         let mut list = vec![];
         let new_list = Solution::sort(root, &mut list);
-        println!("{:?}", new_list);
-        return build(new_list);
+        return Solution::build(&new_list[..]);
     }
 
     fn sort(root: Option<Rc<RefCell<TreeNode>>>, mut list: &mut Vec<TreeNode>) -> &mut Vec<TreeNode> {
@@ -42,7 +41,8 @@ impl Solution {
             Some(node_rc) => {
                 let node = node_rc.borrow();
                 list = Solution::sort(node.left.clone(), list);
-                list.push(node.clone());
+                let curr_node = TreeNode::new(node.val);
+                list.push(curr_node);
                 list = Solution::sort(node.right.clone(), list);
                 list
                 }
@@ -50,27 +50,27 @@ impl Solution {
         }
     }
 
-    fn build(list : &mut Vec<TreeNode>) -> Option<Rc<RefCell<TreeNode>>> {
-        if list.len() == 0 { return list; }
+    fn build(list : &[TreeNode]) -> Option<Rc<RefCell<TreeNode>>> {
+        if list.len() == 0 { return None; }
 
         let middle = list.len() / 2;
-        return Rc::new(RefCell::new(TreeNode
+
+        return Some(Rc::new(RefCell::new(TreeNode
                                 {
-                                    val: 15,
-                                    left: build, // .. middle
-                                    right: build, // middle + 1 ... end
+                                    val: list[middle].val,
+                                    left: Solution::build(&list[..middle]),
+                                    right: Solution::build(&list[middle + 1..]),
                                 }
-                        ));
+                        )));
     }
 
 }
 
 
 fn main() {
-    let tree = tree![1,,[2,,[3,,[5,,]]]];
+    let tree = tree![1,,[2,,[3,,[4,,]]]];
     
     let sol = Solution::balance_bst(Some(Rc::new(RefCell::new(tree))));
-    println!("{:?}", sol);
 }
 
 
@@ -106,3 +106,31 @@ macro_rules! tree {
         }
     };
 }
+
+
+// Cool version
+//        fn inorder(sorted: &mut Vec<i32>, root: &Option<Rc<RefCell<TreeNode>>>) {
+            // root.as_ref().map(|root| {
+            //     let node = root.borrow();
+            //     inorder(sorted, &node.left);
+            //     sorted.push(node.val);
+            //     inorder(sorted, &node.right);
+            // });
+        // }
+        // let mut sorted = vec![];
+        ////
+        //inorder(&mut sorted, &root);
+        
+        //fn bst(sorted: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
+        //    if sorted.is_empty() {
+        //        None
+        //    } else {
+        //        let pos = sorted.len()/2; // 3/2 == 1
+        //        let val = sorted[pos];
+        //        let mut node = TreeNode::new(val);
+        //        node.left = bst(&sorted[..pos]);
+        //        node.right = bst(&sorted[pos+1..]);
+                
+        //        Some(Rc::new(RefCell::new(node)))
+        //    }
+        //}
