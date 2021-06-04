@@ -18,26 +18,40 @@
    }
  }
 impl Solution {
-    pub fn remove_elements(mut head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
+   pub fn sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        
         if head.is_none() { return None; }
         
-        let mut prev: Option<Box<ListNode>> = None;
-        let mut current = head.clone();
+        let mut val_list = Solution::get_values(head);
 
-        while let Some(node) = current {
-            current = node.next.clone();  
+        val_list.sort();
+        return Solution::build_list(val_list);
+        // Some(Box::new(ListNode::new(3)))
+    }
+    
+    // Alternative: push it into a heap, rebuild the list from that
 
-            if node.val == val {
-                if prev.is_none() {
-                    head = current.clone();
-                } else {
-                    prev.unwrap().next = node.next.clone(); 
-                }
+    fn get_values(mut head: Option<Box<ListNode>>) -> Vec<i32> {
+        let mut val_list = Vec::new();
+        while head.is_some() {
+            val_list.push(head.as_ref().unwrap().val);
+            head = head.as_ref().unwrap().next.clone();
+        }
+        val_list
+    }
+
+
+    fn build_list(value_list: Vec<i32>) -> Option<Box<ListNode>> {
+        let mut head = Some(Box::new(ListNode::new(value_list[0])));
+        let mut current = &mut head;
+        for val in value_list[1..].iter() {
+            let new_node = Some(Box::new(ListNode::new(*val)));
+            if let Some(c) = current {
+                c.next = new_node;
+                current = &mut c.next;
             }
-            prev = Some(node);
         }
         head
-
     }
 }
 
