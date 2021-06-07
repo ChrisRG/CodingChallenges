@@ -20,6 +20,18 @@
  }
 impl Solution {
     pub fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-        
+
+    }
+    fn build_list(value_list: Vec<i32>) -> Option<Box<ListNode>> {
+        let mut head = Some(Box::new(ListNode::new(value_list[0])));
+        let mut current = &mut head;
+        for val in value_list[1..].iter() {
+            let new_node = Some(Box::new(ListNode::new(*val)));
+            if let Some(c) = current {
+                c.next = new_node;
+                current = &mut c.next;
+            }
+        }
+        head
     }
 }
