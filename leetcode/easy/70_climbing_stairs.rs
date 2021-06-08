@@ -6,18 +6,32 @@ struct Solution;
 
 impl Solution {
     pub fn climb_stairs(n: i32) -> i32 {
-        let mut memo: Vec<Option<usize>> = vec![None; (n as usize) + 1];
-        Solution::climb_on_up(n as usize, &mut memo) as i32
+        // let n = n as usize;
+        // let mut memo: Vec<Option<usize>> = vec![None; n + 1];
+        Solution::climb_on_up_again(n)
     }
-    
+
+    // Top town:
     fn climb_on_up(n: usize, memo: &mut Vec<Option<usize>>) -> usize {
         if n == 1 || n == 0 { return 1; }
         
         if memo[n].is_none() {
             memo[n] = Some(Solution::climb_on_up(n - 1, memo) + Solution::climb_on_up(n - 2, memo));
         }
-       
+
         memo[n].unwrap()
+    }
+
+    // Bottom up
+    fn climb_on_up_again(n: i32) -> i32 { 
+        let (mut prev1, mut prev2, mut accumulator) = (1, 1, 1);
+        
+        for _ in 2..=n {
+            accumulator = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = accumulator;
+        }
+        accumulator
     }
 }
 
